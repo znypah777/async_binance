@@ -1,4 +1,4 @@
 .idea/
-.venv/
+venv/
 run.py
 api_secret
