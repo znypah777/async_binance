@@ -1,35 +1,16 @@
 import aiohttp
-import time
-from .bases import _PublicEndpoint, _SignedEndpoint, _ProtectedEndpoint, Queryer
+from .bases import PublicEndpoint, SignedEndpoint, ProtectedEndpoint, Queryer
 from typing import Dict, Any
 
-# class PublicDelete(_PublicEndpoint):
-#     async def _execute_query(self, url: str, request_params:Dict[str, Any], **kwargs: str) -> Dict[str, Any]:
-#         return await self._query("delete", url, params=kwargs, **request_params)
-#
-#
-# class SignedDelete(_SignedEndpoint):
-#     async def _execute_query(self, url: str, request_params:Dict[str, Any], **kwargs: str) -> Dict[str, Any]:
-#         kwargs["timestamp"] = str(int(time.time() * 1000))
-#         kwargs["signature"] = self._gen_api_sig(params=kwargs)
-#         headers = {"X-MBX-APIKEY": self._api_key}
-#         return await self._query("delete", url, params=kwargs, headers=headers, **request_params)
-#
-#
-# class ProtectedDelete(_ProtectedEndpoint):
-#     async def _execute_query(self, url: str, request_params:Dict[str, Any], **kwargs: str) -> Dict[str, Any]:
-#         headers = {"X-MBX-APIKEY": self._api_key}
-#         return await self._query("delete", url, headers=headers, params=kwargs, **request_params)
-
-class PublicDelete(_PublicEndpoint):
+class PublicDelete(PublicEndpoint):
     REQ_TYPE = "delete"
 
 
-class SignedDelete(_SignedEndpoint):
+class SignedDelete(SignedEndpoint):
     REQ_TYPE = "delete"
 
 
-class ProtectedDelete(_ProtectedEndpoint):
+class ProtectedDelete(ProtectedEndpoint):
     REQ_TYPE = "delete"
 
 

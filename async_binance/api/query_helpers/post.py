@@ -1,37 +1,17 @@
 import aiohttp
-import time
 from typing import Dict, Any
-from .bases import _PublicEndpoint, _ProtectedEndpoint, _SignedEndpoint, Queryer
+from .bases import PublicEndpoint, ProtectedEndpoint, SignedEndpoint, Queryer
 
 
-# class PublicPost(_PublicEndpoint):
-#     async def _execute_query(self, url: str, request_params:Dict[str, Any], **kwargs: str) -> Dict[str, Any]:
-#         return await self._query("post", url, params=kwargs, **request_params)
-#
-#
-# class SignedPost(_SignedEndpoint):
-#     async def _execute_query(self, url: str, request_params:Dict[str, Any], **kwargs: str) -> Dict[str, Any]:
-#         kwargs["timestamp"] = str(int(time.time() * 1000))
-#         kwargs["signature"] = self._gen_api_sig(params=kwargs)
-#         headers = {"X-MBX-APIKEY": self._api_key}
-#         return await self._query("post", url, params=kwargs, headers=headers, **request_params)
-#
-#
-# class ProtectedPost(_ProtectedEndpoint):
-#     async def _execute_query(self, url: str, request_params:Dict[str, Any],**kwargs: str) -> Dict[str, Any]:
-#         headers = {"X-MBX-APIKEY": self._api_key}
-#         return await self._query("post", url, params=kwargs, headers=headers, **request_params)
-
-
-class PublicPost(_PublicEndpoint):
+class PublicPost(PublicEndpoint):
     REQ_TYPE = "post"
 
 
-class SignedPost(_SignedEndpoint):
+class SignedPost(SignedEndpoint):
     REQ_TYPE = "post"
 
 
-class ProtectedPost(_ProtectedEndpoint):
+class ProtectedPost(ProtectedEndpoint):
     REQ_TYPE = "post"
 
 def post_factory(endpoint: str=None,

@@ -1,9 +1,6 @@
 import aiohttp
-import hmac
-import hashlib
 import time
 from typing import Dict, Any
-from urllib.parse import urlencode
 from .mixins import ReqParamVerifyMixin, SignatureGenerateMixin
 
 class ApiCaller:
@@ -32,12 +29,11 @@ class Queryer(ApiCaller, ReqParamVerifyMixin):
         return await self._execute_query(self._url, **kwargs)
 
 
+class PublicEndpoint(Queryer):
+    pass
 
-class _PublicEndpoint(Queryer):
-    async def _execute_query(self, url: str, request_params: Dict[str, Any]=None, **kwargs: str) -> Dict[str, Any]:
-        pass
 
-class _ProtectedEndpoint(Queryer):
+class ProtectedEndpoint(Queryer):
     API_KEY_HEADER = "X-MBX-APIKEY"
 
     def __init__(self, url: str, api_key: str, session: aiohttp.ClientSession, request_params:Dict[str, Any]=None):
@@ -51,7 +47,7 @@ class _ProtectedEndpoint(Queryer):
         return await self._query(self.REQ_TYPE, url, params=kwargs, headers=headers,**req_params)
 
 
-class _SignedEndpoint(Queryer, SignatureGenerateMixin):
+class SignedEndpoint(Queryer, SignatureGenerateMixin):
     API_KEY_HEADER = "X-MBX-APIKEY"
     TIMESTAMP_PARAM = "timestamp"
     SIGNATURE_PARAM = "signature"
